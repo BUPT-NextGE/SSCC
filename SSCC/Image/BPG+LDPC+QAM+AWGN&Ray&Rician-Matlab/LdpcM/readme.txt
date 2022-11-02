@@ -1,0 +1,2 @@
+LDPC_QAM_AWGN.m是比特文件经过调制、AWGN信道、解调的过程，LDPC_QAM_rayleigh.m和LDPC_QAM_rician.m把信道替换为瑞利信道和莱斯信道。
+LDPC_QAM_AWGN_protection.m文件是对LDPC_QAM_AWGN.m文件做了控制位保护，在35行和74行，分别保存和替换控制位。
