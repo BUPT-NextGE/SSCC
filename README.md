@@ -1,2 +1,2 @@
 # SSCC
-Traditional Codecs of Compression, also with Channel Coding
+Traditional Codecs of Compression for texts, images and videos, also with Channel Coding.
