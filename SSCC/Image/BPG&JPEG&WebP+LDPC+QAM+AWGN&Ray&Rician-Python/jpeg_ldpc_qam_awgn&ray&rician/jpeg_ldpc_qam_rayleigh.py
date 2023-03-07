@@ -213,16 +213,12 @@ def ldpc_qam_awgn(input_signal, snr=2, qam_order=16):
     """
     # 对调制结果通过莱斯信道（指定SNR）
     N = len(modulated_bits)
-    m = np.random.randn(N, 1)
-    t = np.random.randn(N, 1)
-
-    complex_mat = 1j * m[1, :]
-    complex_mat += t[0, :]
-    h=complex_mat/math.sqrt(2)
-    s=modulated_bits*h
-    r = commpy.awgn(s, snr)
-    bits_with_noise=r/h
-
+    # Calculate the channel coefficients
+    h = (np.random.randn(N) + 1j * np.random.randn(N)) / np.sqrt(2)
+    modulated_bits_times_channel_coefficients = modulated_bits * h
+    modulated_bits_times_channel_coefficients_with_noise = commpy.awgn(modulated_bits_times_channel_coefficients, snr)
+    # 接收端需要重新除以信道参数来估计输出
+    bits_with_noise = modulated_bits_times_channel_coefficients_with_noise / h
 
     """
     QAM解调
@@ -260,23 +256,23 @@ if __name__ == "__main__":
     # 输入的图片格式(后缀名，区分大小写)
     input_fmt = 'png'
 
-    # 输出JPEG图片数据集根父路径（未进行LDPC+QAM+AWGN）
-    output_base_path = 'E:\\stl10\\stl_jpeg'
+    # 输出JPEG图片数据集根父路径（未进行LDPC+QAM+rayleigh）
+    output_base_path = 'E:\\stl10\\2JPEG_rayleigh\\JPEG_images'
 
     # 图片对应字节比特流txt的目录
-    output_txt_path = 'E:\\stl10\\stl_jpeg_bit'
+    output_txt_path = 'E:\\stl10\\2JPEG_rayleigh\\JPEG_bit'
 
     # 输出通过了信道传输的JPEG图片数据集根父路径（经过了LDPC+QAM+AWGN）
-    channelcoded_output_base_path = 'E:\\stl10\\stl_jpeg_with_ldpc_qam_rayleigh'
+    channelcoded_output_base_path = 'E:\\stl10\\2JPEG_rayleigh\\JPEG_7dB'
 
     # 目标BPP
     target_bpp = 0.9
 
     # 指定SNR
-    snr = 20
+    snr = 7
 
     # 指定QAM调制阶数
-    qam_order = 16
+    qam_order = 4
 
     """
     完成整套JPEG压缩
