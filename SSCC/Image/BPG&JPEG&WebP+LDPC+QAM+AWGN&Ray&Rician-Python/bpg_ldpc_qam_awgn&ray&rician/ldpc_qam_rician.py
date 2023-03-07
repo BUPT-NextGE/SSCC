@@ -85,7 +85,7 @@ def ldpc_qam_rayleigh(input_signal, snr=2, qam_order=16):
     m = np.random.randn(N, 1)
     t = np.random.randn(N, 1)
     Complex_Mat = 1j * m[1, :]
-    Complex_Mat += t[0, :]
+    Complex_Mat += t[:, 1]
     h=math.sqrt(K/K+1)+math.sqrt(1/K+1)*Complex_Mat/math.sqrt(2)
     s=modulated_bits*h
     r = commpy.awgn(s, snr)
