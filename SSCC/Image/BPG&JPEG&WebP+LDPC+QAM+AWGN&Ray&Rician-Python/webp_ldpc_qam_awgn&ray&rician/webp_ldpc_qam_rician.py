@@ -216,7 +216,7 @@ def ldpc_qam_rayleigh(input_signal, snr=2, qam_order=16):
     m = np.random.randn(N, 1)
     t = np.random.randn(N, 1)
     Complex_Mat = 1j * m[1, :]
-    Complex_Mat += t[0, :]
+    Complex_Mat += t[:, 1]
     h = math.sqrt(K / K + 1) + math.sqrt(1 / K + 1) * Complex_Mat / math.sqrt(2)
     s = modulated_bits * h
     r = commpy.awgn(s, snr)
@@ -265,7 +265,7 @@ if __name__ == "__main__":
     output_txt_path = 'E:\\stl10\\stl_webp_bit_rician'
 
     # 输出通过了信道传输的JPEG图片数据集根父路径（经过了LDPC+QAM+rayleigh）
-    channelcoded_output_base_path = 'E:\\stl10\\stl_webp_with_ldpc_qam_rician'
+    channelcoded_output_base_path = 'E:\\stl10\\rician'
 
     # 目标BPP
     target_bpp = 0.6
